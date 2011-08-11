@@ -1,0 +1,9 @@
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+HOME=`echo ~`
+
+echo "$DIR - $HOME"
+
+ln -s "$DIR/bash_aliases" "$HOME/.bash_aliases" && ln -s "$DIR/bashrc.d" "$HOME/.bashrc.d";
+
+ln -s "$DIR/git.d/config" "$HOME/.gitconfig" && ln -s "$DIR/git.d/ignore" "$HOME/.gitignore";
+

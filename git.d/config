@@ -1,0 +1,51 @@
+[user]
+	name = Potherca
+	email = potherca@gmail.com
+	
+[core]
+  excludesfile = ~/.gitignore	
+
+[alias] 
+    st = status
+    stat = status
+    ci = commit
+    co = checkout
+	up = pull
+    
+    graph = log --graph --oneline --decorate
+
+	info = cat-file commit HEAD
+
+    staged = diff --cached
+    tags = tag -n1 -l
+    log = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+    settings = config --list     
+
+[color]
+        ui = true
+        pager = true
+        diff = auto
+        status = auto
+        branch = auto
+        interactive = auto
+
+
+[color "branch"]
+        current = yellow reverse
+        local = yellow
+        remote = green
+
+
+[color "diff"]
+        meta = yellow bold
+        frag = magenta bold
+        old = red bold
+        new = green bold
+
+
+[color "status"]
+        added = yellow
+        changed = green
+        untracked = cyan
+        
