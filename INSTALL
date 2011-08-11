@@ -1,7 +1,12 @@
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 HOME=`echo ~`
 
-echo "$DIR - $HOME"
+echo "Symlinking .bashrc and .git files "
+echo " from $DIR"
+echo " into $HOME"
+echo ""
+
+#@TODO: ask the user for input if this is correct...
 
 ln -s "$DIR/bash_aliases" "$HOME/.bash_aliases" && ln -s "$DIR/bashrc.d" "$HOME/.bashrc.d";
 
