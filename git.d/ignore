@@ -1,3 +1,20 @@
+#-------------------------------#
+# 	 	IDE Project Folders		#
+#-------------------------------#
 .idea/
 nbproject/
-.svn/
+
+#-------------------------------#
+# 		OS generated files 		#
+#-------------------------------#
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+.AppleDouble
+
+
+#-------------------------------#
+# Other Code Management Systems	#
+#-------------------------------#
+.svn
