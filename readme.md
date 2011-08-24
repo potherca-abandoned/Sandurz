@@ -5,7 +5,7 @@ be a good idea to put them in one place together so I can more easily expand and
 improve my script code base.
 
 I also have a *very* basic installer for my `.bashrc` and `.gitconfig` files 
-(use at your owbn risk).
+(use at your own risk).
 
 .bashrc
 ----------------
