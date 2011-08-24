@@ -1,11 +1,11 @@
 #-------------------------------#
-# 	 	IDE Project Folders		#
+#      IDE Project Folders      #
 #-------------------------------#
 .idea/
 nbproject/
 
 #-------------------------------#
-# 		OS generated files 		#
+#       OS generated files      #
 #-------------------------------#
 .DS_Store?
 ehthumbs.db
@@ -15,6 +15,6 @@ Thumbs.db
 
 
 #-------------------------------#
-# Other Code Management Systems	#
+# Other Code Management Systems #
 #-------------------------------#
 .svn
