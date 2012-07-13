@@ -3,7 +3,7 @@
     email = potherca@gmail.com
 
 [core]
-    excludesfile = ~/.gid.d/ignore
+    excludesfile = ~/.git.d/ignore
     editor = gedit
 
 [alias]
