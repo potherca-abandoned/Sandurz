@@ -32,7 +32,7 @@ function runInstall() {
 	#@TODO: ask the user for input if this is correct...
 
 	ln -s "$DIR/bash_aliases" "$HOME/.bash_aliases" && ln -s "$DIR/bashrc.d" "$HOME/.bashrc.d";
-	ln -s "$DIR/git.d/config" "$HOME/.gitconfig" && ln -s "$DIR/git.d/ignore" "$HOME/.gitignore";
+	ln -s "$DIR/git.d" "$HOME/.git.d" && ln -s "$HOME/.git.d/config" "$HOME/.gitconfig"
 
 	if [ -f "$HOME/.bashrc" ]; then
 		echoDebug "Found .bashrc in the home directory"
@@ -70,7 +70,7 @@ function runInstall() {
 		fi
 
 		echoDebug "Calling $BASHRC for inclusion"
-		. $BASHRC
+		source $BASHRC
 	fi
 }
 # ==============================================================================

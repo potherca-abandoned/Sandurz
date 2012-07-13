@@ -1,9 +1,9 @@
 [user]
-	name = UserName
-	email = UserName@example.com
-	
+    name = Ben Peachey
+    email = potherca@gmail.com
+
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.gid.d/ignore
     editor = gedit
 
 [alias]
