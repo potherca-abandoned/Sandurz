@@ -5,7 +5,8 @@
 HERE=$(pwd)
 cd ~
 for FILE in .bashrc.d/*; 
-	do	. $FILE
+do
+	source $FILE
 done
 cd $HERE
 # ==============================================================================
@@ -36,9 +37,15 @@ alias ls='ls -hlpX  --group-directories-first --color=auto'
 # The only downsides to this is that directories are moved indiscrimanately 
 # (meanig, without specifying them using the -d flag).
 # ------------------------------------------------------------------------------
-alias rm="mv -t ~/.local/share/Trash/files/"
+alias rm='mv -t ~/.local/share/Trash/files/'
 # ==============================================================================
 
+
+# ==============================================================================
+# Sometimes I just like to go "back"
+# ------------------------------------------------------------------------------
+alias back='cd -'
+# ==============================================================================
 
 
 # ==============================================================================
