@@ -38,18 +38,23 @@
     #impact = !git ls-files -z | xargs -0n1 git blame -w -C | sed -r 's/^[^(]+\\((.*) [0-9]{4}-.*/\\1/' | sed -r 's/ +$//' | sort -f | uniq -c | sort -nr
     #funcdiff '!sh -c "git show \"\$1:\$3\" | sed -n \"/^[^ \t].*\$4(/,/^}/p\" > .tmp1 && git show \"\$2:\$3\" | sed -n \"/^[^ \t].*\$4(/,/^}/p\" > .tmp2 && git diff --no-index .tmp1 .tmp2"' -
 
+
     ## Home Grown
+    ## @FIXME: All of these examples should be checked to see if they need the current branch or master or develop (if in git flow repo)
+
     info     = !echo 'URL(s):' && git remote -v  && echo '' && echo 'Branche(s):' && git branch -a && echo '' && git log --max-count=1 --pretty=format:'Last Changed Author: %an%nLast Channged Rev: %h%nLast Changed Date:  %cD%n  %aD '
     settings = config --list
     staged   = diff --cached
     tags     = tag -n1 -l
     unstash  = stash pop
-    #update-branch  = !~/git.d/git-update-branch.sh
-    update-branch  = !/home/ben/Dropbox/www/Development/[Programming]/Sandurz/git.d/git-update-branch.sh
+    update-branch  = !~/.git.d/git-update-branch.sh
     incoming = !git fetch && git log --decorate ..origin/master #origin/master..HEAD
     unpushed = log --branches --not --remotes --decorate
+    #delete-remote-branch = push origin --delete branch
 
 
+    ## inspired by http://gitready.com/advanced/2011/10/21/ribbon-and-catchup-reading-new-commits.html
+    unseen-changes = !~/.git.d/git-unseen-changes.sh
 
 [color]
         ui = true
