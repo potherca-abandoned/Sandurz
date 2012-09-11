@@ -4,7 +4,7 @@
 
 [core]
     excludesfile = ~/.git.d/ignore
-    editor = gedit
+    # editor = gedit
 
 [alias]
     st = status
@@ -48,7 +48,7 @@
     tags     = tag -n1 -l
     unstash  = stash pop
     update-branch  = !~/.git.d/git-update-branch.sh
-    incoming = !git fetch && git log --decorate ..origin/master #origin/master..HEAD
+    incoming = !~/.git.d/git-incoming-changes.sh
     unpushed = log --branches --not --remotes --decorate
     #delete-remote-branch = push origin --delete branch
 
