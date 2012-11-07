@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
+set -u
 
 # Idea stolen from http://www.slideshare.net/nickgsuperstar/static-analysis-for-php
 
@@ -10,7 +12,7 @@ fi
 
 DIR=$1
 
-$logFile='php-errors.log'
+logFile='php-errors.log'
 
 echo '' > $logFile
 
