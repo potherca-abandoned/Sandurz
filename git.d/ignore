@@ -1,6 +1,7 @@
 #-------------------------------#
 #      IDE Project Folders      #
 #-------------------------------#
+.project
 .idea/
 nbproject/
 
@@ -18,3 +19,5 @@ Thumbs.db
 # Other Code Management Systems #
 #-------------------------------#
 .svn
+
+#EOF
