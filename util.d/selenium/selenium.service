@@ -1,0 +1,13 @@
+[Unit]
+Description=Selenium Server
+
+[Service]
+User=root
+EnvironmentFile=/var/scripts
+ExecStart=/var/scripts/selenium-server.sh start
+ExecReload=/var/scripts/selenium-server.sh restart
+ExecStop=/var/scripts/selenium-server.sh stop
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

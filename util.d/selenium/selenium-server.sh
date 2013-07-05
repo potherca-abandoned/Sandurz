@@ -1,6 +1,8 @@
 #!/bin/bash
 #set -x
 
+seleniumServerVersion='2.25.0'
+
 # ==============================================================================
 # Set up some defaults
 # ------------------------------------------------------------------------------
@@ -8,7 +10,8 @@ logFile='/var/log/selenium-server.log'
 screenSize='1024x768x16'
 displayNumber='22'
 portNumber='4444'
-SeleniumServer='/home/ben/Dropbox/www/3rd-party/selenium-server-standalone-2.25.0.jar'
+currentDir=`dirname $0`
+SeleniumServer="${currentDir}/selenium-server-standalone-${seleniumServerVersion}.jar"
 # ==============================================================================
 
 # ==============================================================================

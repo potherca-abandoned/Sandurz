@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ $# != 2 ];then
     echo 'ERROR : This script expects two parameter:'

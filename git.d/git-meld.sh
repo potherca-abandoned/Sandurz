@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-netbeans ${1#*\?}
+
+meld "$2" "$5"
