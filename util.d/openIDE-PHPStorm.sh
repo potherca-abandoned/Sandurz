@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 line=${1#*\?}
 
 f=${line%:*}

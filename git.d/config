@@ -4,15 +4,14 @@
 
 [core]
     excludesfile = ~/.git.d/ignore
+	autocrlf = input
     # editor = gedit
 
 [alias]
-    st = status
-    stat = status
-    cl = clone
-    ci = commit
-    co = checkout
-    cd = checkout
+    #st = status
+    #ci = commit
+    #co = checkout
+    #cd = checkout
     up = pull --all
 
     ## https://git.wiki.kernel.org/index.php/Aliases
@@ -42,16 +41,18 @@
     ## Home Grown
     ## @FIXME: All of these examples should be checked to see if they need the current branch or master or develop (if in git flow repo)
 
-    info     = !echo 'URL(s):' && git remote -v  && echo '' && echo 'Branche(s):' && git branch -a && echo '' && git log --max-count=1 --pretty=format:'Last Changed Author: %an%nLast Channged Rev: %h%nLast Changed Date:  %cD%n  %aD '
-    settings = config --list
-    staged   = diff --cached
-    tags     = tag -n1 -l
-    unstash  = stash pop
-    update-branch  = !~/.git.d/git-update-branch.sh
-    incoming = !~/.git.d/git-incoming-changes.sh
-    unpushed = log --branches --not --remotes --decorate
-    #delete-remote-branch = push origin --delete branch
-
+    #clone-all-branches      = !f(){for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v master`; do git branch --track ${branch##*/} $branch; done;};f && git fetch --all && git pull --all
+    #delete-remote-branch   = push origin --delete branch
+    incoming                = !~/.git.d/git-incoming-changes.sh
+    info                    = !~/.git.d/git-info.sh
+    settings                = config --list
+    staged                  = diff --cached
+    tags                    = tag -n1 -l
+    unstash                 = stash pop
+    unpushed                = log --branches --not --remotes --decorate
+    undo-last-commit        = reset --soft HEAD^
+    unstage                 = reset HEAD $@
+    update-branch           = !~/.git.d/git-update-branch.sh
 
     ## inspired by http://gitready.com/advanced/2011/10/21/ribbon-and-catchup-reading-new-commits.html
     unseen-changes = !~/.git.d/git-unseen-changes.sh
@@ -85,3 +86,6 @@
 
 [mergetool]
     keepBackup = false
+    
+[diff]
+external = ~/.git.d/git-meld.sh

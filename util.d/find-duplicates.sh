@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # author : José Fonseca
 # url    : https://code.google.com/p/jrfonseca/
 
