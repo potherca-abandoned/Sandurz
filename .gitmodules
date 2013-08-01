@@ -1,3 +1,6 @@
 [submodule "vendor/symfony2-autocomplete"]
 	path = vendor/symfony2-autocomplete
 	url = git://github.com/KnpLabs/symfony2-autocomplete.git
+[submodule "vendor/dircolors"]
+	path = vendor/dircolors
+	url = https://github.com/seebi/dircolors-solarized.git
