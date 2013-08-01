@@ -25,7 +25,7 @@ function echoDebug() {
 function runInstall() {
 
 	echo ""
-	echo "Creating symlinks for .bashrc and .git files "
+	echo "Creating symlinks for .bashrc, .dircolors and .git files"
 	echo "	from $DIR"
 	echo "	into $HOME"
 
@@ -33,6 +33,7 @@ function runInstall() {
 
 	ln -s "$DIR/bash_aliases" "$HOME/.bash_aliases" && ln -s "$DIR/bashrc.d" "$HOME/.bashrc.d";
 	ln -s "$DIR/git.d" "$HOME/.git.d" && ln -s "$HOME/.git.d/config" "$HOME/.gitconfig"
+	ln -s "$DIR/vendor/dircolors/dircolors.ansi-light" "$HOME/.dircolors"
 
 	if [ -f "$HOME/.bashrc" ]; then
 		echoDebug "Found .bashrc in the home directory"
