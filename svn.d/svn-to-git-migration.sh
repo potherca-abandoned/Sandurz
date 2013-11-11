@@ -7,22 +7,19 @@ set -o errexit # exit on all and any errors, same as -e
 DEBUG=1
 repoRootPath='/git/repos'               # <- devstar git version
 #repoRootPath='/home/git/repositories'   # <- devstar gitolite version
-#repoRootPath='/home/ben/Desktop/dev/DCPF/repos'
+#repoRootPath='/home/ben/Desktop/dev/repo'
 
-svnRepoPath="$repoRootPath/dcpf.svn"   
+svnRepoPath="$repoRootPath/project.svn"   
 logPath="$repoRootPath/svn-to-git.log"
-remoteGit='git@dcpf-dev'
+remoteGit='git@project-dev'
 
 declare -A subFolders
 # subFolderfolder[repoName]='path/to/folder'
-subFolders['dcpf-library']='library/DCPF'
-subFolders['red']='rphp.library'
-subFolders['dcpf-web-resources']='www/rsrc'
+subFolders['library']='library/'
+subFolders['web-resources']='www/rsrc'
 
 # Third-Party Folders
-subFolders['dompdf']='library/dompdf'
 subFolders['firephp']='library/FirePHP'
-subFolders['jpgraph']='library/JPGraph'
 subFolders['minify']='library/Minify'
 subFolders['pear']='library/PEAR'
 
@@ -84,25 +81,25 @@ function validateRepoPathExists() {
 
 
 # ==============================================================================
-#   Get the DCPF SVN repository
+#   Get the SVN repository
 # ------------------------------------------------------------------------------
-function fetchDcpfSvnRepository() {
-    if [ -d "$repoRootPath/dcpf.git" ];then
-        echoLog "DCPF git repo already exists. Deleting... "
-        /bin/rm -rdf "$repoRootPath/dcpf.git"
+function fetchSvnRepository() {
+    if [ -d "$repoRootPath/project.git" ];then
+        echoLog "Project git repo already exists. Deleting... "
+        /bin/rm -rdf "$repoRootPath/project.git"
     fi
 
-    if [ -d "$repoRootPath/dcpf.svn" ];then
-        echoLog "DCPF svn repo already exists. Deleting... "
-        /bin/rm -rdf "$repoRootPath/dcpf.svn"
+    if [ -d "$repoRootPath/project.svn" ];then
+        echoLog "Project svn repo already exists. Deleting... "
+        /bin/rm -rdf "$repoRootPath/prject.svn"
     fi
 
     echoLog "Exporting the SVN repo to '$svnRepoPath'."
-    svn export https://intern.vrestmedical.com/svn/Projecten/DCPF/modern/ "$svnRepoPath" >> $logPath
+    svn export https://path.to/svn/Project "$svnRepoPath" >> $logPath
 
 #    if [ ! -d "$svnRepoPath" ];then
 #        echoLog "Checking out the SVN repo to '$svnRepoPath'."
-#        svn co https://intern.vrestmedical.com/svn/Projecten/DCPF/modern/ "$svnRepoPath" >> $logPath
+#        svn co https://path.to/svn/Project "$svnRepoPath" >> $logPath
 #    else
 #        echoLog "SVN repo exists at '$svnRepoPath'. Updating..." 
 #        svn up "$svnRepoPath" >> $logPath
@@ -113,7 +110,7 @@ function fetchDcpfSvnRepository() {
 
 
 # ==============================================================================
-# Make git repositories for all requested DCPF sub-folders
+# Make git repositories for all requested project sub-folders
 # ------------------------------------------------------------------------------
 function makeGitReposForSubfolders() {
 
@@ -163,12 +160,12 @@ function makeGitReposForSubfolders() {
 
 
 # ==============================================================================
-# Make main DCPF git repository
+# Make main git repository
 # ------------------------------------------------------------------------------
-function makeDcpfGitRepo() {
+function makeGitRepo() {
 
     gitInit=true
-    repoName='dcpf'
+    repoName='project'
 
     echoLog "# ------------------------------------------------------------------------------"
 
@@ -208,16 +205,16 @@ function makeDcpfGitRepo() {
 
 
 # ==============================================================================
-# Make git subtrees in DCPF git repository
+# Make git subtrees in project git repository
 # ------------------------------------------------------------------------------
 function makeGitSubtrees() {
     
-    repoName='dcpf'
+    repoName='project'
     
     cd "$repoRootPath/$repoName.git"
         
     echoLog "# ------------------------------------------------------------------------------"
-    echoLog "Adding git subtree for all non-dcpf.git directories to their right location in dcpf.git"
+    echoLog "Adding git subtree for all non-project.git directories to their right location in project.git"
     # Since the instructions are a little sparse, here’s how I installed and used it on Ubuntu:
     # git clone https://github.com/apenwarr/git-subtree.git
     # cd git-subtree
@@ -230,7 +227,7 @@ function makeGitSubtrees() {
         subFolder="${subFolders[$repoName]}"
         
         echoLog "---- Adding git subtree for '$repoName.git' at location '$subFolder'"
-        git subtree add --squash --message="DCPF-?? Adding $repoName as subtree" --prefix="$subFolder" "$repoRootPath/$repoName.git"
+        git subtree add --squash --message="Project-?? Adding $repoName as subtree" --prefix="$subFolder" "$repoRootPath/$repoName.git"
     done
 
 }
@@ -238,14 +235,14 @@ function makeGitSubtrees() {
 
 
 # ==============================================================================
-# Make git subtrees in DCPF git repository
+# Make git subtrees in project git repository
 # ------------------------------------------------------------------------------
 function makeGitSubmodules() {
 
-    repoName='dcpf'
+    repoName='project'
     
     echoLog "# ------------------------------------------------------------------------------"
-    echoLog "Adding git submodules for all non-dcpf.git directories to their right location in dcpf.git"
+    echoLog "Adding git submodules for all non-project.git directories to their right location in project.git"
 
     cd "$repoRootPath/$repoName.git"
     
@@ -273,17 +270,17 @@ function makeGitSubmodules() {
 
 
 # ==============================================================================
-# Run DCPF -- SVN to git migration
+# Run SVN to git migration
 # ------------------------------------------------------------------------------
 function run() {
     validateRepoPathExists
 
     echo '' > "$logPath"
-    echoLog 'DCPF -- SVN to git migration'
+    echoLog 'SVN to git migration'
 
-    fetchDcpfSvnRepository
+    fetchSvnRepository
     makeGitReposForSubfolders
-    makeDcpfGitRepo
+    makeGitRepo
     makeGitSubmodules
 
     log '# ------------------------------------------------------------------------------'
