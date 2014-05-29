@@ -3,11 +3,11 @@ set -o nounset # exit on use of an uninitialised variable, same as -u
 set -o errexit # exit on all and any errors, same as -e
 
 repoRootPath='/home/ben/Desktop/dev/DCPF/mirror'
-destinationRepoName='dcpf'
+destinationRepoName='MyRepo'
 destinationRepoPath="$repoRootPath/$destinationRepoName"
 sourceRepository='https://example.com/path/to/svn/'
 
-#@TODO: instead of hardcoding the svn user we should implement svnUser='PeacheyB'
+#@TODO: instead of hardcoding the svn user we should implement svnUser='MySvnUser'
 
 hookPath="$destinationRepoPath/hooks/pre-revprop-change"
 
@@ -19,9 +19,9 @@ cat <<'EOF' > $hookPath
 #!/bin/sh
 USER="$3"
 
-if [ "$USER" = "PeacheyB" ]; then exit 0; fi
+if [ "$USER" = "MySvnUser" ]; then exit 0; fi
 
-echo "Only the PeacheyB user can change revprops" >&2
+echo "Only MySvnUser can change revprops" >&2
 exit 1
 EOF
 
