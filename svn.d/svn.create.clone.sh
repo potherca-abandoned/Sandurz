@@ -5,8 +5,7 @@ set -o errexit # exit on all and any errors, same as -e
 repoRootPath='/home/ben/Desktop/dev/DCPF/mirror'
 destinationRepoName='dcpf'
 destinationRepoPath="$repoRootPath/$destinationRepoName"
-#sourceRepository='https://intern.vrestmedical.com/svn/Projecten/DCPF/modern'
-sourceRepository='https://intern.vrestmedical.com/svn/'
+sourceRepository='https://example.com/path/to/svn/'
 
 #@TODO: instead of hardcoding the svn user we should implement svnUser='PeacheyB'
 
