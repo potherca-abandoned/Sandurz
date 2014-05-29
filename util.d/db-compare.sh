@@ -12,7 +12,7 @@ handleParams() {
 		USER=
 		PASS=
 
-		HOST='-h dcpf-dev'	# Define a remote host here and uncommend to use
+		HOST='-h mysql.example.com'	# Define a remote host here and uncommend to use
 
 		#VERBOSE=''			# Verbose by Default
 		VERBOSE='--brief'	# Not Verbose by Default
