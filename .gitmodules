@@ -7,3 +7,6 @@
 [submodule "vendor/git-remote-hg"]
 	path = vendor/git-remote-hg
 	url = https://github.com/felipec/git-remote-hg.git
+[submodule "vendor/git-flow-completion"]
+	path = vendor/git-flow-completion
+	url = https://github.com/bobthecow/git-flow-completion.git
