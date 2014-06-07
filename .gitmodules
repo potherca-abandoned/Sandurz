@@ -4,3 +4,6 @@
 [submodule "vendor/dircolors"]
 	path = vendor/dircolors
 	url = https://github.com/seebi/dircolors-solarized.git
+[submodule "vendor/git-remote-hg"]
+	path = vendor/git-remote-hg
+	url = https://github.com/felipec/git-remote-hg.git
