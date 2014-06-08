@@ -3,6 +3,11 @@
 # and include all the files from that directory from here
 # ------------------------------------------------------------------------------
 
+aVendorScript[0]='symfony2-autocomplete/symfony2-autocomplete.bash'
+aVendorScript[1]='git-flow-completion/git-flow-completion.bash'
+aVendorScript[2]='heroku_bash_completion/heroku_bash_completion.sh'
+
+# ------------------------------------------------------------------------------
 # find out where we are located, following symlinks as the install script symlinks the `.bashrc.d` directory to `~/`
 if [ -n "${BASH_SOURCE}" ]; then
     sScriptPath="${BASH_SOURCE}"
@@ -22,9 +27,6 @@ else
 fi
 
 sVendorDir="$(dirname ${sScriptPath})/../vendor"
-
-aVendorScript[0]='symfony2-autocomplete/symfony2-autocomplete.bash'
-aVendorScript[1]='git-flow-completion/git-flow-completion.bash'
 
 for sFile in "${aVendorScript[@]}" 
 do

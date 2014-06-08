@@ -10,3 +10,6 @@
 [submodule "vendor/git-flow-completion"]
 	path = vendor/git-flow-completion
 	url = https://github.com/bobthecow/git-flow-completion.git
+[submodule "vendor/heroku_bash_completion"]
+	path = vendor/heroku_bash_completion
+	url = https://github.com/rafmagana/heroku_bash_completion.git
