@@ -6,6 +6,7 @@
 aVendorScript[0]='symfony2-autocomplete/symfony2-autocomplete.bash'
 aVendorScript[1]='git-flow-completion/git-flow-completion.bash'
 aVendorScript[2]='heroku_bash_completion/heroku_bash_completion.sh'
+aVendorScript[3]='composer-bash-completion/composer'
 
 # ------------------------------------------------------------------------------
 # find out where we are located, following symlinks as the install script symlinks the `.bashrc.d` directory to `~/`
