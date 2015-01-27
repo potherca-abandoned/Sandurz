@@ -7,6 +7,9 @@
 	autocrlf = input
     # editor = gedit
 
+[push]
+    default = current
+
 [alias]
     #st = status
     #ci = commit
