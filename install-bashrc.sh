@@ -5,7 +5,7 @@
 # ==============================================================================
 # ------------------------------------------------------------------------------
 DIR="$( cd "$( dirname "$0" )" && pwd )"	# Current script directory
-HOME=`echo ~`
+HOME=$(echo ~)
 DEBUG=1
 # ==============================================================================
 
@@ -33,7 +33,14 @@ function runInstall() {
 
 	ln -s "$DIR/bash_aliases" "$HOME/.bash_aliases" && ln -s "$DIR/bashrc.d" "$HOME/.bashrc.d";
 	ln -s "$DIR/git.d" "$HOME/.git.d" && ln -s "$HOME/.git.d/config" "$HOME/.gitconfig"
+
 	ln -s "$DIR/vendor/dircolors/dircolors.ansi-light" "$HOME/.dircolors"
+	
+	# @FIXME: Using ln failed because of our "can't execute code from drive D:/ problem" using cp for now
+	#ln -s --update "$DIR/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg'
+	#@TODO: use https://github.com/felipec/git instead
+	#sudo cp --update "$DIR/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg'
+ 
 
 	if [ -f "$HOME/.bashrc" ]; then
 		echoDebug "Found .bashrc in the home directory"
