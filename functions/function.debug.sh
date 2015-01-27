@@ -9,6 +9,7 @@ function debug() {
 
 # ==============================================================================
 # set -o noexec     # Read commands in script, but do not execute them (syntax check), same as set -n
+#
 # set -x            # activate debugging from here
 # ...               # your code here
 # set +x            # stop debugging from here
