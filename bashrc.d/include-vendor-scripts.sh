@@ -1,15 +1,17 @@
 # ==============================================================================
-# To keep this file simple and clean, we put more complex scripts in .bashrc.d 
-# and include all the files from that directory from here
+# All the scripts in the array below will be loaded when this script is called
 # ------------------------------------------------------------------------------
-
 aVendorScript[0]='symfony2-autocomplete/symfony2-autocomplete.bash'
 aVendorScript[1]='git-flow-completion/git-flow-completion.bash'
 aVendorScript[2]='heroku_bash_completion/heroku_bash_completion.sh'
 aVendorScript[3]='composer-bash-completion/composer'
+# ==============================================================================
 
+
+# ==============================================================================
+# Find out where we are located, following symlinks as the install script
+# symlinks the `.bashrc.d` directory to `~/`
 # ------------------------------------------------------------------------------
-# find out where we are located, following symlinks as the install script symlinks the `.bashrc.d` directory to `~/`
 if [ -n "${BASH_SOURCE}" ]; then
     sScriptPath="${BASH_SOURCE}"
 elif [ -n "$ZSH_VERSION" ]; then
@@ -26,12 +28,17 @@ else
         exit 64
     fi
 fi
+# ==============================================================================
 
+
+# ==============================================================================
+# Source all the files in the array from the vendor directory
+# ------------------------------------------------------------------------------
 sVendorDir="$(dirname ${sScriptPath})/../vendor"
 
-for sFile in "${aVendorScript[@]}" 
+for sFile in "${aVendorScript[@]}"
 do
-	source "${sVendorDir}/${sFile}"
+    source "${sVendorDir}/${sFile}"
 done
 # ==============================================================================
 
