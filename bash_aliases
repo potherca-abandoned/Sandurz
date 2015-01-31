@@ -1,23 +1,20 @@
 
 # ==============================================================================
-# To keep this file simple and clean, we put more complex scripts in .bashrc.d 
+# To keep this file simple and clean, we put more complex scripts in `.bashrc.d`
 # and include all the files from that directory from here
 # ------------------------------------------------------------------------------
 function includeFolder {
-    HERE=$(pwd)
-    cd ~
-    for FILE in "$1/*";
-    do
-        if [ -d "$FILE" ];then
-            includeFolder "$1/$FILE"
-        else
-    	    source $FILE
-	    fi
+    echo "Including enhancements from $1"
+
+    iLength=${#1}
+
+    for FILE in $(find "$1" -type f -name '*.sh' | sort -d);do
+        echo "--> ${FILE:$iLength}"
+        source "$FILE"
     done
-    cd $HERE
 }
 # ==============================================================================
 
-includeFolder '.bashrc.d'
+includeFolder "$(pwd)/.bashrc.d/"
 
 #EOF
