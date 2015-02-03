@@ -13,6 +13,6 @@
 [submodule "vendor/heroku_bash_completion"]
 	path = vendor/heroku_bash_completion
 	url = https://github.com/rafmagana/heroku_bash_completion.git
-[submodule "vendor/composer-bash-completion"]
-	path = vendor/composer-bash-completion
-	url = https://github.com/iArren/composer-bash-completion.git
+[submodule "vendor/composer-bash-completion-plugin"]
+	path = vendor/composer-bash-completion-plugin
+	url = git@github.com:stecman/composer-bash-completion-plugin.git
