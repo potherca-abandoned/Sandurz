@@ -58,6 +58,13 @@ function runInstall() {
     # ------------------------------------------------------------------------------
 
     # ------------------------------------------------------------------------------
+    # dircolors is available through coreutils which can be installed with brew
+    # @TODO: Prompt the user to install coreutils
+    # ------------------------------------------------------------------------------
+    # @TODO: Check bash version and (espacially when on mac) install (newer) GNU version!
+    # ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
     #@TODO: use https://github.com/felipec/git instead
     #ln -s -i "$DIR/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg'
     # ------------------------------------------------------------------------------
