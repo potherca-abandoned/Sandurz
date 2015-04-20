@@ -1,16 +1,15 @@
 # ==============================================================================
 # All the scripts in the array below will be loaded when this script is called
 # ------------------------------------------------------------------------------
-aVendorScript[0]='symfony2-autocomplete/symfony2-autocomplete.bash'
 aVendorScript[1]='git-flow-completion/git-flow-completion.bash'
 aVendorScript[2]='heroku_bash_completion/heroku_bash_completion.sh'
-aVendorScript[3]='composer-bash-completion/composer'
+aVendorScript[3]='symfony2-autocomplete/symfony2-autocomplete.bash'
 # ==============================================================================
 
 
 # ==============================================================================
 # Find out where we are located, following symlinks as the install script
-# symlinks the `.bashrc.d` directory to `~/`
+# symlinks the `bashrc.d/` directory to `~/.bashrc.d/`
 # ------------------------------------------------------------------------------
 if [ -n "${BASH_SOURCE}" ]; then
     sScriptPath="${BASH_SOURCE}"
@@ -36,10 +35,14 @@ fi
 # ------------------------------------------------------------------------------
 sVendorDir="$(dirname ${sScriptPath})/../vendor"
 
+echo "# ------------------------------------------------------------------------------"
+echo "# Including vendor scripts from ${sVendorDir}"
 for sFile in "${aVendorScript[@]}"
 do
+    echo "# --> ${sFile}"
     source "${sVendorDir}/${sFile}"
 done
+echo "# ------------------------------------------------------------------------------"
 # ==============================================================================
 
 #EOF
