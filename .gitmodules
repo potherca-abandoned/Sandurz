@@ -16,3 +16,9 @@
 [submodule "vendor/composer-bash-completion-plugin"]
 	path = vendor/composer-bash-completion-plugin
 	url = git@github.com:stecman/composer-bash-completion-plugin.git
+[submodule "vendortrash-cli"]
+	path = vendortrash-cli
+	url = git@github.com:andreafrancia/trash-cli.git
+[submodule "vendor/trash-cli"]
+	path = vendor/trash-cli
+	url = git@github.com:andreafrancia/trash-cli.git
