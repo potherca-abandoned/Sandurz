@@ -1,11 +1,11 @@
-#!/bin/bash
-# set -o nounset # exit on use of an uninitialised variable, same as -u
-# set -o errexit # exit on all and any errors, same as -e
+#!/usr/bin/env bash
+
+set -o nounset # exit on use of an uninitialised variable, same as -u
+set -o errexit # exit on all and any errors, same as -e
 
 # ==============================================================================
 # ------------------------------------------------------------------------------
-DIR="$( cd "$( dirname "$0" )" && pwd )"	# Current script directory
-HOME=$(echo ~)
+DIR="$( cd "$( dirname "$0" )" && pwd )"    # Current script directory
 DEBUG=1
 # ==============================================================================
 
@@ -13,9 +13,9 @@ DEBUG=1
 # ==============================================================================
 # ------------------------------------------------------------------------------
 function echoDebug() {
-	if [ "$DEBUG" != "0" ];then
-		echo "--> $@"
-	fi
+    if [ "$DEBUG" != "0" ];then
+        echo "--> $@"
+    fi
 }
 # ==============================================================================
 
@@ -24,59 +24,44 @@ function echoDebug() {
 # ------------------------------------------------------------------------------
 function runInstall() {
 
-	echo ""
-	echo "Creating symlinks for .bashrc, .dircolors and .git files"
-	echo "	from $DIR"
-	echo "	into $HOME"
+    echo ""
+    echo "Creating symlinks for .profile, .dircolors and .git files"
+    echo "    from $DIR"
+    echo "    into $HOME"
 
-	#@TODO: ask the user for input if this is correct...
+    #@TODO: ask the user for input if this is correct...
 
-	ln --symbolic --interactive "$DIR/bash_aliases" "$HOME/.bash_aliases" && ln --symbolic --interactive "$DIR/bashrc.d" "$HOME/.bashrc.d";
-	ln --symbolic --interactive "$DIR/git.d" "$HOME/.git.d" && ln --symbolic --interactive "$HOME/.git.d/config" "$HOME/.gitconfig"
+    ln -s -i "$DIR/bash_aliases" "$HOME/.bash_aliases" && ln -s -i "$DIR/bashrc.d" "$HOME/.bashrc.d";
+    ln -s -i "$DIR/git.d" "$HOME/.git.d" && ln -s -i "$HOME/.git.d/config" "$HOME/.gitconfig"
 
-	ln --symbolic --interactive "$DIR/vendor/dircolors/dircolors.ansi-light" "$HOME/.dircolors"
-	
-	#@TODO: use https://github.com/felipec/git instead
-	#ln --symbolic --interactive "$DIR/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg' 
+    ln -s -i "$DIR/vendor/dircolors/dircolors.ansi-light" "$HOME/.dircolors"
 
-	if [ -f "$HOME/.bashrc" ]; then
-		echoDebug "Found .bashrc in the home directory"
-		BASHRC="$HOME/.bashrc"
-	else 
-		echo ""
-		echo "Did not find a .bashrc file in the home directory."
+    #@TODO: use https://github.com/felipec/git instead
+    #ln -s -i "$DIR/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg'
 
-		if [ -f "/etc/bash.bashrc" ]; then
-			#Copy system .bashrc to home
-			BASHRC="/etc/bash.bashrc"
+	sProfilePath="$HOME/.profile"
+    if [ -f "${sProfilePath}" ]; then
+        echoDebug "Found .profile in the home directory"
+    else
+        echo -e "Did not find a .profile file in the home directory.\n"
+        echo -e "Creating empty .profile file in ${HOME}\n"
 
-			echo ""
-			echo "Copying .bashrc"
-			echo "	from $BASHRC"
-			echo "	to $HOME/.bashrc"
-			echo ""
+        echo '' > "${sProfilePath}"
+    fi
 
-			cp $BASHRC $HOME/.bashrc
-		fi
+    # Make sure that .bash_aliases is included from .profile
+    sResult="$(grep bash_aliases $sProfilePath || echo 1)"
 
-		# @TODO: Make an educated guess at where .bashrc might be hiding?
-	fi
+    if [ "${sResult}" = "1" ];then
+        echoDebug "Did not find a reference to .bash_aliases in .profile"
+        echoDebug "Appending reference of .bash_aliases to .profile"
+        echo -e "\n# Include .bash_aliases\nif [ -f ".bash_aliases" ]; then\n\t. .bash_aliases\nfi" >> $HOME/.profile
+    else
+        echoDebug "Found reference to .bash_aliases in .profile"
+    fi
 
-	if [ $BASHRC ];then
-		# Make sure that .bash_aliases is included from .bashrc
-		RESULT=`grep bash_aliases $BASHRC`
-
-		if [ "$RESULT" = "" ];then
-			echoDebug "Did not find a reference to .bash_aliases in .bashrc"
-			echoDebug "Appending reference of .bash_aliases to .bashrc"
-			echo -e "\n# Include .bash_aliases\nif [ -f ".bash_aliases" ]; then\n\t. .bash_aliases\nfi" >> $HOME/.bashrc
-		else
-			echoDebug "Found reference to .bash_aliases in .bashrc"
-		fi
-
-		echoDebug "Calling $BASHRC for inclusion"
-		source $BASHRC
-	fi
+    echoDebug "Calling $sProfilePath for inclusion"
+    source $sProfilePath
 }
 # ==============================================================================
 
