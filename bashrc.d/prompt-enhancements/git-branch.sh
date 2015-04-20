@@ -3,10 +3,34 @@
 # http://railstips.org/blog/archives/2009/02/02/bedazzle-your-bash-prompt-with-git-info/
 # ------------------------------------------------------------------------------
 function parse_git_branch {
-	ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-	# Display branch name in blue
-	echo -e  '\E[0;34m'"\033[1m("${ref#refs/heads/}") \033[0m"
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    sBranch="${ref#refs/heads/}"
+
+    case "${sBranch}" in
+        master)
+            # On the MASTER branch, Color the promt red
+            sColor=31
+        ;;
+
+        develop)
+            # On the DEVELOP branch, Color the prompt yellow
+            sColor=33
+        ;;
+
+        feature/*)
+            # On a FEATURE branch, Color the prompt green
+            sColor=32
+        ;;
+
+        *)
+            # We're no longer in Kansas, Dorothy! Color the promt blue
+            sColor=34
+        ;;
+    esac
+
+    echo -e "(\033[${sColor}m${sBranch}\033[00m)"
 }
+
 # ------------------------------------------------------------------------------
 PS1="$PS1\$(parse_git_branch)"
 # ==============================================================================
