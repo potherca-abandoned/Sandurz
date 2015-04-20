@@ -8,13 +8,16 @@ function includeFolder {
 
     iLength=${#1}
 
-    for FILE in $(find "$1" -type f -name '*.sh' | sort -d);do
-        echo "--> ${FILE:$iLength}"
-        source "$FILE"
+    aFiles=$(find "$1" -type f -name '*.sh' | sort -d)
+
+    for sFile in $aFiles;do
+        echo "--> ${sFile:$iLength}"
+        source "$sFile"
     done
 }
 # ==============================================================================
 
-includeFolder "$(pwd)/.bashrc.d/"
+sDirectory="${HOME}"
+includeFolder "$sDirectory/.bashrc.d/"
 
 #EOF
