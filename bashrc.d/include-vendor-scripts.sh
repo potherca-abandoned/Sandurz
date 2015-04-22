@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+source "${HOME}/.common.sh"
+
 # ==============================================================================
 # All the scripts in the array below will be loaded when this script is called
 # ------------------------------------------------------------------------------
@@ -35,14 +39,16 @@ fi
 # ------------------------------------------------------------------------------
 sVendorDir="$(dirname ${sScriptPath})/../vendor"
 
-echo "# ------------------------------------------------------------------------------"
-echo "# Including vendor scripts from ${sVendorDir}"
+sourceFunction indent
+sourceFunction printTopic
+sourceFunction printStatus
+
+printTopic "Including vendor scripts"
 for sFile in "${aVendorScript[@]}"
 do
-    echo "# --> ${sFile}"
-    source "${sVendorDir}/${sFile}"
+    printStatus "${sFile}"
+    source "${sVendorDir}/${sFile}" | indent
 done
-echo "# ------------------------------------------------------------------------------"
 # ==============================================================================
 
 #EOF
