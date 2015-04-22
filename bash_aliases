@@ -1,3 +1,4 @@
+
 source "${HOME}/.common.sh"
 
 sourceFunction printStatus
@@ -16,8 +17,8 @@ function includeFolder {
     aFiles=$(find "$1" -type f -name '*.sh' | sort -d)
 
     for sFile in $aFiles;do
-        printStatus "${sFile:$iLength}"
-        source "$sFile" | indent
+        printStatus "${sFile:$iLength}" | indent
+        source "${sFile}"
     done
 }
 # ==============================================================================
