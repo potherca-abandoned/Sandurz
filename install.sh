@@ -5,7 +5,7 @@ set -o errexit # exit on all and any errors, same as -e
 
 # ==============================================================================
 # ------------------------------------------------------------------------------
-sScriptDirectory="$( cd "$( dirname "$0" )" && pwd )" # Current script directory
+sScriptDirectory=$( cd "$( dirname "$0" )" && pwd ) # Current script directory
 DEBUG=1
 # ==============================================================================
 
@@ -30,7 +30,7 @@ function symlinkCommonFunctionsFile() {
 
     #@TODO: ask the user for input if this is correct...
 
-    ln -s -i "$sScriptDirectory/functions/common.sh" "$HOME/.common.sh"|| true
+    ln -s -i "${sScriptDirectory}/functions/common.sh" "${HOME}/.common.sh"|| true
 }
 # ------------------------------------------------------------------------------
 
@@ -42,8 +42,8 @@ function symlinkBashFiles() {
 
     #@TODO: ask the user for input if this is correct...
 
-    ln -s -i "$sScriptDirectory/bash_aliases" "$HOME/.bash_aliases" \
-        && ln -s -i "$sScriptDirectory/bashrc.d" "$HOME/.bashrc.d"
+    ln -s -i "${sScriptDirectory}/bash_aliases" "${HOME}/.bash_aliases" \
+        && ln -s -i "${sScriptDirectory}/bashrc.d" "${HOME}/.bashrc.d"
 }
 # ==============================================================================
 
@@ -54,9 +54,9 @@ function symlinkGitFiles() {
     printTopic 'Creating symlinks for .git files'
 
     #@TODO: ask the user for input if this is correct...
-
-    ln -s -i "$sScriptDirectory/git.d" "$HOME/.git.d" \
-        && ln -s -i "$HOME/.git.d/config" "$HOME/.gitconfig"
+echo "sScriptDirectory ${sScriptDirectory}"
+    ln -s -i "${sScriptDirectory}/git.d" "${HOME}/.git.d" \
+        && ln -s -i "${HOME}/.git.d/config" "${HOME}/.gitconfig"
 }
 # ==============================================================================
 
@@ -74,7 +74,7 @@ function symlinkDircolors() {
     sTheme="${sScriptDirectory}/vendor/dircolors/dircolors.ansi-light"
 
     #@TODO: ask the user for input if this is correct...
-    ln -s -i "${sTheme}" "$HOME/.dircolors" || true
+    ln -s -i "${sTheme}" "${HOME}/.dircolors" || true
 }
 # ==============================================================================
 
@@ -136,7 +136,7 @@ function validateBashAliases() {
 # ------------------------------------------------------------------------------
 function sourceFiles() {
     printTopic "Calling $sProfilePath for inclusion"
-    source "${sProfilePath}" | indent
+    source "${sProfilePath}"
 }
 # ------------------------------------------------------------------------------
 
@@ -156,7 +156,7 @@ function runInstall() {
 
     # ------------------------------------------------------------------------------
     #@TODO: use https://github.com/felipec/git instead
-    #ln -s -i "$sScriptDirectory/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg'
+    #ln -s -i "${sScriptDirectory}/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg'
     # ------------------------------------------------------------------------------
 
     symlinkBashFiles
