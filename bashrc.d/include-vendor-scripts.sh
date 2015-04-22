@@ -47,7 +47,7 @@ printTopic "Including vendor scripts"
 for sFile in "${aVendorScript[@]}"
 do
     printStatus "${sFile}"
-    source "${sVendorDir}/${sFile}" | indent
+    source "${sVendorDir}/${sFile}" > indent
 done
 # ==============================================================================
 
