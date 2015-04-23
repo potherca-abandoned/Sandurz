@@ -30,7 +30,7 @@ function symlinkCommonFunctionsFile() {
 
     #@TODO: ask the user for input if this is correct...
 
-    ln -s -i "${sScriptDirectory}/functions/common.sh" "${HOME}/.common.sh"|| true
+    ln -s -i "${sScriptDirectory}/functions/common.sh" "${HOME}/.common.sh" || true
 }
 # ------------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ function validateBashCompletion() {
         printStatus 'Bash completion is already installed'
     else
         printStatus 'Bash completion is not installed'
-        if [ "$(brew --version > /dev/null && echo 1)" == "1" ];then
+        if [ "$(brew --version > /dev/null 2>&1 && echo 1)" == "1" ];then
             printStatus "Using brew to install bash-completion"
             brew install bash-completion
         elif [ "$(apt-get --version > /dev/null && echo 1)" == "1" ];then
