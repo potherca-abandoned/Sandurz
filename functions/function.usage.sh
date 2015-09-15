@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 usage() {
-    shortUsage "${@}"
+    shortUsage "${@:-}"
 }
 
 # Displays all lines in main script that start with '##'
