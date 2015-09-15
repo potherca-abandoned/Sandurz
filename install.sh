@@ -54,7 +54,7 @@ function symlinkGitFiles() {
     printTopic 'Creating symlinks for .git files'
 
     #@TODO: ask the user for input if this is correct...
-echo "sScriptDirectory ${sScriptDirectory}"
+    echo "sScriptDirectory ${sScriptDirectory}"
     ln -s -i "${sScriptDirectory}/git.d" "${HOME}/.git.d" \
         && ln -s -i "${HOME}/.git.d/config" "${HOME}/.gitconfig"
 }
