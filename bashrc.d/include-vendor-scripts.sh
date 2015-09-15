@@ -48,8 +48,8 @@ function includeVendorScripts() {
     printTopic "Including vendor scripts" | indent
     for sFile in "${aVendorScript[@]}"
     do
-        printStatus "${sFile}" | indent | indent
-        source "${sVendorDir}/${sFile}" > indent
+        printStatus "${sFile}" | indent
+        source "${sVendorDir}/${sFile}" | indent
     done
     # ==============================================================================
 }
