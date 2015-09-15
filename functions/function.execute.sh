@@ -18,7 +18,7 @@ function execute() {
     #@FIXME: Add option to hide the output
     sCommand="${1}"
     shift
-    sOutput=$(${sCommand} ${@} 2>&1) || error "${2-}\n${sOutput}"
+    sOutput=$(${sCommand} ${@:-} 2>&1) || error "${2-}\n${sOutput}"
 }
 # ==============================================================================
 
