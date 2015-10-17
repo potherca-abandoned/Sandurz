@@ -1,0 +1,6 @@
+[diff]
+    external = ~/.git.d/git-meld.sh
+
+[difftool "sourcetree"]
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+    path =
