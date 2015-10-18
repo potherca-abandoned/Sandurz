@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 
 # ==============================================================================
+# This script provides a general mechanism to load various functions from the
+# `functions` directory. It should be symlinked to the `$HOME` directory for
+# easy usage.
+#
+# To load any function from a script, first source this file and then call
+# `sourceFunction` with the name of the function to be loaded.
+#
+# For example, to load the `foo` function the following should be used:
+#
+#     source "${HOME}/.common.sh" && sourceFunction foo
+# ==============================================================================
+
+# ==============================================================================
 function sourceFunction() {
+    # @TODO: Load multiple functions by supporting multiple arguments!
     sFunction=$1
 
     # Find out where we are located, following symlinks as the install script
