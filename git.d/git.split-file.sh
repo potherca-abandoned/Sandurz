@@ -59,12 +59,12 @@
 # DEBUG_LEVEL 4 = " and show all other commands (=set +x)
 # DEBUG_LEVEL 5 = Show All Commands, without Debug Messages or Application Calls
 
-readonly DEBUG_LEVEL=0
+readonly DEBUG_LEVEL=2
 # ==============================================================================
 
 
 # ==============================================================================
-#                                APPLICATION VARS                              
+#                                APPLICATION VARS
 # ------------------------------------------------------------------------------
 # For all options see http://www.tldp.org/LDP/abs/html/options.html
 set -o nounset      # Exit script on use of an undefined variable, same as "set -u"
@@ -86,16 +86,17 @@ declare -i g_iErrorCount=0
 # ==============================================================================
 #                           IMPORT EXTERNAL FUNCTIONS
 # ------------------------------------------------------------------------------
-function importDependencies {
-    sScriptDir=$(readlink -f "$(dirname ${0})/../functions")
+function importDependencies() {
 
-    source "${sScriptDir}/function.debug.sh"
-    source "${sScriptDir}/function.error.sh"
-    source "${sScriptDir}/function.execute.sh"
-    source "${sScriptDir}/function.message.sh"
-    source "${sScriptDir}/function.outputErrorMessages.sh"
-    source "${sScriptDir}/function.printRuler.sh"
-    source "${sScriptDir}/function.usage.sh"
+    source "${HOME}/.common.sh"
+
+    sourceFunction debug
+    sourceFunction error
+    sourceFunction execute
+    sourceFunction message
+    sourceFunction outputErrorMessages
+    sourceFunction printRuler
+    sourceFunction usage
 }
 # ==============================================================================
 
@@ -127,11 +128,11 @@ function handleParams {
         g_iExitCode=65
         error 'This script expects two command-line arguments'
     elif [ "${g_bShowHelp}" = false ];then
-        readonly g_sRootFilePath=$(readlink -f "${1}")
+        readonly g_sRootFilePath=$(readlink "${1}")
         readonly g_sRootFileName=$(basename "${g_sRootFilePath}")
-        readonly g_sSplitDirectory=$(readlink -f "${2}")
+        readonly g_sSplitDirectory=$(readlink "${2}")
 
-        if [ ! -f $(readlink -f "${g_sRootFilePath}") ];then
+        if [ ! -f $(readlink "${g_sRootFilePath}") ];then
             g_iExitCode=66
             error "The given root file '${g_sRootFilePath}' does not exist"
         else
@@ -139,7 +140,7 @@ function handleParams {
 
             cd "${g_sRootDirectory}" # @FIXME: <--- Using `cd` is a side-effect!
 
-            if [ $(git status $(readlink -f "${1}") > /dev/null 2>&1 || echo '1') ];then
+            if [ $(git status $(readlink "${1}") > /dev/null 2>&1 || echo '1') ];then
                 g_iExitCode=67
                 error "The given split file '${1}' is not part of a git repository"
             else
@@ -149,10 +150,10 @@ function handleParams {
             fi
         fi
 
-        if [ ! -e $(readlink -f "${g_sSplitDirectory}") ];then
+        if [ ! -e $(readlink "${g_sSplitDirectory}") ];then
             g_iExitCode=68
             error "The given split directory '${g_sSplitDirectory}' does not exist"
-        elif [ ! -d $(readlink -f "${g_sSplitDirectory}") ];then
+        elif [ ! -d $(readlink "${g_sSplitDirectory}") ];then
             g_iExitCode=69
             error "The given split directory '${g_sSplitDirectory}' is not a directory"
         fi
@@ -164,26 +165,26 @@ function handleParams {
 # ##############################################################################
 #                              UTILITY FUNCTIONS
 # ##############################################################################
-function debugMessage {
+function debugMessage() {
     if [ "${DEBUG_LEVEL}" -gt 0 ] && [ "${DEBUG_LEVEL}" -lt 5 ];then
         debug "${1}"
     fi
 }
 
-function getCurrentBranch {
+function getCurrentBranch() {
     echo $(git rev-parse --abbrev-ref HEAD)
 }
 
-function commit {
+function commit() {
     echo "git commit -m \"${1}\""
     git commit -m "${1}"
 }
 
-function createSubBranch {
+function createSubBranch() {
     execute "git checkout -b ${g_sSplitBranch}_${1}"
 }
 
-function checkoutBranch {
+function checkoutBranch() {
     printRuler 3
     message "Switching back to ${2} branch"
     printRuler 3
@@ -191,15 +192,15 @@ function checkoutBranch {
     message "Current branch : $(getCurrentBranch)"
 }
 
-function checkoutRootBranch {
+function checkoutRootBranch() {
     checkoutBranch "${g_sRootBranch}" 'original'
 }
 
-function checkoutSplitBranch {
+function checkoutSplitBranch() {
     checkoutBranch "${g_sSplitBranch}" 'split'
 }
 
-function createSplitBranch {
+function createSplitBranch() {
     printRuler 2
     message 'Creating separate branche to merge split files back into'
     printRuler 3
@@ -208,7 +209,7 @@ function createSplitBranch {
     echo ''
 }
 
-function mergeSplitBranch {
+function mergeSplitBranch() {
     local sSplitFile="${1}"
     local -i iResult=0
     printRuler 3
@@ -227,7 +228,7 @@ function mergeSplitBranch {
     fi
 }
 
-function renameFile {
+function renameFile() {
     local sNewFile="${1}"
 
     if [ "${g_sRootFileName}" = "${sNewFile}" ];then
@@ -238,7 +239,7 @@ function renameFile {
     fi
 }
 
-function moveFileContent {
+function moveFileContent() {
     local sFile="${1}"
     local sMessage
 
@@ -256,7 +257,7 @@ function moveFileContent {
     commit "${sMessage}"
 }
 
-function runSplit {
+function runSplit() {
 
     createSplitBranch
 
@@ -275,7 +276,7 @@ function runSplit {
     done
 }
 
-function runMerges {
+function runMerges() {
 
     printRuler 2
     message 'Merging all the file-split branches into the main split branch'
@@ -301,7 +302,7 @@ function runMerges {
     echo ''
 }
 
-function runCleanup {
+function runCleanup() {
     printRuler 2
     message 'Remove all the split branches that were created'
     printRuler 3
@@ -314,7 +315,7 @@ function runCleanup {
     printRuler 2
 }
 
-function outputHeader {
+function outputHeader() {
     printRuler 2
     message "        running $0"
     message "       for file ${g_sRootFilePath}"
@@ -330,7 +331,7 @@ function outputHeader {
     echo ''
 }
 
-function run {
+function run() {
 
     outputHeader
 
@@ -342,7 +343,7 @@ function run {
     runCleanup
 }
 
-function finish {
+function finish() {
     if [ ! ${g_iExitCode} -eq 0 ];then
         outputErrorMessages ${g_aErrorMessages[*]}
 
@@ -365,7 +366,7 @@ function finish {
     exit ${g_iExitCode}
 }
 
-function registerTraps {
+function registerTraps() {
     trap finish EXIT
     if [ "${DEBUG_LEVEL}" -gt 1 ] && [ "${DEBUG_LEVEL}" -lt 5 ];then
         # Trap function is defined inline so we get the correct line number
@@ -379,9 +380,9 @@ function registerTraps {
 # ==============================================================================
 #                               RUN LOGIC
 # ------------------------------------------------------------------------------
-registerTraps
 importDependencies
-handleParams $@
+registerTraps
+handleParams VALUE=${@:-}
 
 if [ ${g_iExitCode} -eq 0 ];then
 
