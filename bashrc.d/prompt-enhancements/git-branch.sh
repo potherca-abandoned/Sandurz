@@ -24,6 +24,11 @@ function parse_git_branch {
             sColor=32
         ;;
 
+        gh-pages)
+            # On a FEATURE branch, Color the prompt magenta
+            sColor=35
+        ;;
+
         *)
             # We're no longer in Kansas, Dorothy! Color the promt blue
             sColor=34
