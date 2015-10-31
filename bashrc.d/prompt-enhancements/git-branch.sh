@@ -1,10 +1,12 @@
+#!/usr/bin/env bash
 # ==============================================================================
 # Enhance prompt when inside git repos
 # http://railstips.org/blog/archives/2009/02/02/bedazzle-your-bash-prompt-with-git-info/
 # ------------------------------------------------------------------------------
 function parse_git_branch {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    sBranch="${ref#refs/heads/}"
+    local sColor
+    local sRef=$(git symbolic-ref HEAD 2> /dev/null) || return
+    local sBranch="${sRef#refs/heads/}"
 
     case "${sBranch}" in
         master)
@@ -28,11 +30,14 @@ function parse_git_branch {
         ;;
     esac
 
-    echo -e "(\033[${sColor}m${sBranch}\033[00m)"
+    if [ "${sBranch}" != "" ];then
+        echo -ne " (\033[${sColor}m${sBranch}\033[00m)"
+    fi
+
 }
 
 # ------------------------------------------------------------------------------
-PS1="$PS1\$(parse_git_branch)"
+#PS1="$PS1\$(parse_git_branch)"
 # ==============================================================================
 
 #EOF
