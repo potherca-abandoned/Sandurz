@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Start a X virtual framebuffer server
 PID=`ps -eo pid,args  | grep "Xvfb.*:22" | grep -v grep | awk '{ print $1 }'`

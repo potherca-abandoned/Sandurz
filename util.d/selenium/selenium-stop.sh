@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Stop the Selenium Server
 PID=`ps -eo pid,args | grep "selenium.*-port 4444" | grep -v grep | awk '{ print $1 }'`
