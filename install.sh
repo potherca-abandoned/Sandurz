@@ -103,17 +103,17 @@ function validateBashCompletion() {
 
 
 # ==============================================================================
-# Make sure that .bash_aliases is included from .profile
+# Make sure that .bash_aliases is included from .bash_profile
 # ------------------------------------------------------------------------------
 function validateBashAliases() {
-    printTopic 'Validating .bash_aliases is included from .profile'
+    printTopic 'Validating .bash_aliases is included from .bash_profile'
 
-    sProfilePath="${HOME}/.profile"
+    sProfilePath="${HOME}/.bash_profile"
     if [ -f "${sProfilePath}" ]; then
-        printStatus "Found .profile in the home directory"
+        printStatus "Found .bash_profile in the home directory"
     else
-        printStatus "Did not find a .profile file in the home directory."
-        printStatus "Creating .profile file in ${HOME}\n"
+        printStatus "Did not find a .bash_profile file in the home directory."
+        printStatus "Creating .bash_profile file in ${HOME}\n"
 
         echo '' > "${sProfilePath}"
     fi
@@ -121,12 +121,12 @@ function validateBashAliases() {
     sResult="$(grep bash_aliases $sProfilePath || echo 1)"
 
     if [ "${sResult}" = "1" ];then
-        printStatus "Did not find a reference to .bash_aliases in .profile"
-        printStatus "Appending reference of .bash_aliases to .profile"
+        printStatus "Did not find a reference to .bash_aliases in .bash_profile"
+        printStatus "Appending reference of .bash_aliases to .bash_profile"
 
-        echo -e "\n# Include .bash_aliases\nif [ -f ".bash_aliases" ]; then\n\t. .bash_aliases\nfi" >> $HOME/.profile
+        echo -e "\n# Include .bash_aliases\nif [ -f ".bash_aliases" ]; then\n\t. .bash_aliases\nfi" >> $HOME/.bash_profile
     else
-        printStatus "Found reference to .bash_aliases in .profile"
+        printStatus "Found reference to .bash_aliases in .bash_profile"
     fi
 }
 # ------------------------------------------------------------------------------
