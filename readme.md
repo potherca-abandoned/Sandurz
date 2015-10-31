@@ -2,6 +2,16 @@
  Introduction
 ----------------
 
+<!--
+@TODO: Mention other great dotfile references
+ 
+https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789
+http://www.dotfiles.org/
+http://dotshare.it/
+https://dotfiles.github.io/
+
+-->
+
 I usually have a lot of different bash scripts lying around and I felt it might 
 be a good idea to put them in one place together so I can more easily expand and 
 improve my script code base.
