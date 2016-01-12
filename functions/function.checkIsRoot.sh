@@ -1,12 +1,23 @@
 #!/usr/bin/env bash
 
-function checkIsRoot {
-    GEBRUIKER="`whoami`"
+source "${HOME}/.common.sh"
 
-    if [ $GEBRUIKER != 'root' ]; then
-        echo You can only run this script as ROOT!
-        endScript
+# ==============================================================================
+function checkIsRoot {
+# ------------------------------------------------------------------------------
+    if [ "$(whoami)" != 'root' ]; then
+        sourceFunction printWarning
+        printWarning 'Script can only be run as ROOT'
+        exit 65;
     fi
 }
+# ==============================================================================
+
+# ==============================================================================
+if [ "${0}" = "${BASH_SOURCE}" ];then
+    # direct call to file
+    checkIsRoot
+fi # else file is included from another script
+# ==============================================================================
 
 #EOF
