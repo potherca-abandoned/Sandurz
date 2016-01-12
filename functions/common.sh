@@ -14,9 +14,9 @@
 # ==============================================================================
 
 # ==============================================================================
-function sourceFunction() {
-    # @TODO: Load multiple functions by supporting multiple arguments!
-    sFunction=$1
+function findRootDirectory() {
+
+    local sScriptPath
 
     # Find out where we are located, following symlinks as the install script
     # symlinks the `common.sh` file to `~/.common.sh`
@@ -39,15 +39,30 @@ function sourceFunction() {
         fi
     fi
 
-    sFunctionsDirectory="$(dirname ${sScriptPath})"
-    sSourceFile="${sFunctionsDirectory}/function.${sFunction}.sh"
+    sRootDirectory="$(dirname $(dirname ${sScriptPath}))"
 
-    if [ -f "$sSourceFile" ]; then
-        source "${sSourceFile}"
-    else
-        source "${sFunctionsDirectory}/function.printError.sh"
-        printError "Could not find file for command '${sFunction}'"
-    fi
+    echo "${sRootDirectory}"
 }
+# ==============================================================================
+
+# ==============================================================================
+function sourceFunction() {
+    local sFunction
+    local sSourceFile
+
+    local readonly sFunctionsDirectory="$(findRootDirectory)/functions/"
+
+    for sFunction in "$@";do
+        sSourceFile="${sFunctionsDirectory}/function.${sFunction}.sh"
+
+        if [ -f "$sSourceFile" ]; then
+            source "${sSourceFile}"
+        else
+            source "${sFunctionsDirectory}/function.printError.sh"
+            printError "Could not find file for command '${sFunction}'"
+        fi
+    done
+}
+# ==============================================================================
 
 #EOF
