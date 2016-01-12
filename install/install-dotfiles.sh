@@ -3,30 +3,22 @@
 set -o nounset # exit on use of an uninitialised variable, same as -u
 set -o errexit # exit on all and any errors, same as -e
 
+# @FIXME: Anything that does not symlink/install DOTFILES should be moved to a separate install script
+# (Especially since *this* script should be called from an  parent "install" script that also installs other tools onto a new system (NIX or OSX supported, thusfar)
+
+
 # ==============================================================================
 # ------------------------------------------------------------------------------
-sScriptDirectory=$( cd "$( dirname "$0" )" && pwd ) # Current script directory
+# Get the current script directory
+readonly sScriptDirectory="$( unset CDPATH && cd $( dirname $0 )/../ && pwd -P )"
 DEBUG=1
-# ==============================================================================
-
-
-# ==============================================================================
-# Import Messaging utilities
-# ------------------------------------------------------------------------------
-source "${sScriptDirectory}/functions/common.sh"
-
-sourceFunction indent
-sourceFunction printTopic
-sourceFunction printStatus
-sourceFunction printWarning
-#sourceFunction printDebug
 # ==============================================================================
 
 
 # ==============================================================================
 # ------------------------------------------------------------------------------
 function symlinkCommonFunctionsFile() {
-    printTopic 'Creating symlinks for common Bash utility functions script'
+    echo 'Creating symlinks for common Bash utility functions script'
 
     #@TODO: ask the user for input if this is correct...
 
@@ -37,13 +29,28 @@ function symlinkCommonFunctionsFile() {
 
 # ==============================================================================
 # ------------------------------------------------------------------------------
+function importUtilities() {
+  source "${sScriptDirectory}/functions/common.sh"
+
+  sourceFunction indent
+  sourceFunction printTopic
+  sourceFunction printStatus
+  sourceFunction printWarning
+  #sourceFunction printDebug
+  sourceFunction isMacOS
+}
+# ==============================================================================
+
+
+# ==============================================================================
+# ------------------------------------------------------------------------------
 function symlinkBashFiles() {
     printTopic 'Creating symlinks for Bash enhancements'
 
     #@TODO: ask the user for input if this is correct...
 
     ln -s -i "${sScriptDirectory}/bash_aliases" "${HOME}/.bash_aliases" \
-        && ln -s -i "${sScriptDirectory}/bashrc.d" "${HOME}/.bashrc.d"
+        && ln -s -i "${sScriptDirectory}/bashrc" "${HOME}/.bashrc.d" || true
 }
 # ==============================================================================
 
@@ -55,8 +62,8 @@ function symlinkGitFiles() {
 
     #@TODO: ask the user for input if this is correct...
     echo "sScriptDirectory ${sScriptDirectory}"
-    ln -s -i "${sScriptDirectory}/git.d" "${HOME}/.git.d" \
-        && ln -s -i "${HOME}/.git.d/config" "${HOME}/.gitconfig"
+    ln -s -i "${sScriptDirectory}/git" "${HOME}/.git.d" \
+        && ln -s -i "${HOME}/.git.d/config" "${HOME}/.gitconfig" || true
 }
 # ==============================================================================
 
@@ -124,9 +131,9 @@ function validateBashAliases() {
         printStatus "Did not find a reference to .bash_aliases in .bash_profile"
         printStatus "Appending reference of .bash_aliases to .bash_profile"
 
-        echo -e "\n# Include .bash_aliases\nif [ -f ".bash_aliases" ]; then\n\t. .bash_aliases\nfi" >> $HOME/.bash_profile
+        echo -e "\n# Include .bash_aliases\nif [ -f '.bash_aliases' ]; then\n\t. .bash_aliases\nfi" >> $HOME/.bash_profile
     else
-        printStatus "Found reference to .bash_aliases in .bash_profile"
+        printStatus 'Found reference to .bash_aliases in .bash_profile'
     fi
 }
 # ------------------------------------------------------------------------------
@@ -135,7 +142,7 @@ function validateBashAliases() {
 # ==============================================================================
 # ------------------------------------------------------------------------------
 function sourceFiles() {
-    printTopic "Calling $sProfilePath for inclusion"
+    printTopic "Calling ${sProfilePath} for inclusion"
     source "${sProfilePath}"
 }
 # ------------------------------------------------------------------------------
@@ -146,12 +153,24 @@ function sourceFiles() {
 function runInstall() {
 
     echo 'Installing files'
-    echo "from $sScriptDirectory" | indent
-    echo "into $HOME" | indent
+    echo "from $sScriptDirectory"
+    echo "into $HOME"
 
     symlinkCommonFunctionsFile
+    importUtilities
+
     # ------------------------------------------------------------------------------
-    # @TODO: Check bash version and (espacially when on mac) install (newer) GNU version!
+    if [[ "${BASH_VERSION:0:1}" == 3 ]];then
+        if [[ isMacOS ]];then
+            # @CHECKME: Install coreutils? If coreutils is used in scripts, that would mean
+            #           those scripts can _only_ be used by others who also have coreutils installed.
+            #           that might not be a desirable situation...
+            printWarning "Older version of Bash is installed: ${BASH_VERSION%%(*}"
+        #elif @TODO: What else? What if we *are* on an older Linux system?
+        fi
+    fi
+    # @TODO: Check bash version and (especially when on OSX) install (newer) GNU version?
+    #        This would require `brew`.
     # ------------------------------------------------------------------------------
 
     # ------------------------------------------------------------------------------
@@ -159,6 +178,7 @@ function runInstall() {
     #ln -s -i "${sScriptDirectory}/vendor/git-remote-hg/git-remote-hg" "/usr/local/bin/" && sudo chmod +x '/usr/local/bin/git-remote-hg'
     # ------------------------------------------------------------------------------
 
+    # @TODO: properly run `cd "${sScriptDirectory}" && git submodule init && git submodule update` to install vendor scripts
     symlinkBashFiles
     symlinkGitFiles
     symlinkDircolors
