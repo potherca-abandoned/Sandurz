@@ -15,7 +15,7 @@ function includeVendorScripts() {
 
     # ==============================================================================
     # Find out where we are located, following symlinks as the install script
-    # symlinks the `bashrc.d/` directory to `~/.bashrc.d/`
+    # symlinks the `bashrc/` directory to `~/.bashrc.d/`
     # ------------------------------------------------------------------------------
     if [ -n "${BASH_SOURCE}" ]; then
         sScriptPath="${BASH_SOURCE}"

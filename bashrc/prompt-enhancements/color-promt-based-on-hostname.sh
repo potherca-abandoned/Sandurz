@@ -8,8 +8,8 @@ function colorPromptBasedOnHostname() {
     local sHostName=`uname -n`
 
     case "$sHostName" in
-        *-vre-*)
-            # should be a PRODCUTION machine, Color the promt red
+        *-prod-*)
+            # should be a PRODUCTION machine, Color the prompt red
             sColor=41
         ;;
 
@@ -24,7 +24,7 @@ function colorPromptBasedOnHostname() {
         ;;
 
         *)
-            # We're no longer in Kansas, Dorothy! Color the promt blue
+            # We're no longer in Kansas, Dorothy! Color the prompt blue
             sColor=44
         ;;
     esac

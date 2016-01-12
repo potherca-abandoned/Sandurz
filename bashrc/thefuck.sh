@@ -10,7 +10,7 @@ if isInstalled 'thefuck';then
     eval "$(thefuck --alias)"
 else
     sourceFunction printWarning
-    printWarning 'thefuck (correction script) is not installed'
+    printWarning 'The correction script "thefuck" is not installed'
 fi
 # ==============================================================================
 
