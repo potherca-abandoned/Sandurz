@@ -10,10 +10,10 @@
     changes=diff --name-status -r
     new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
     graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
-    who = shortlog -s --
+    who = shortlog -s -n --
 
     ##
-    graph = log --graph --oneline --decorate
+    graph = log --graph --oneline --decorate --date=relative
     #info = cat-file commit HEAD
     log = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 
