@@ -22,3 +22,6 @@
 [submodule "vendor/trash-cli"]
 	path = vendor/trash-cli
 	url = git@github.com:andreafrancia/trash-cli.git
+[submodule "vendor/git-smb"]
+	path = vendor/git-smb
+	url = git@github.com:pascaldevink/git-smb.git
