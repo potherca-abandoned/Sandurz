@@ -90,13 +90,7 @@ function importDependencies() {
 
     source "${HOME}/.common.sh"
 
-    sourceFunction debug
-    sourceFunction error
-    sourceFunction execute
-    sourceFunction message
-    sourceFunction outputErrorMessages
-    sourceFunction printRuler
-    sourceFunction usage
+    sourceFunction debug error execute message outputErrorMessages printRuler usage
 }
 # ==============================================================================
 
