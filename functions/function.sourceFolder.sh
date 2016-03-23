@@ -2,20 +2,19 @@
 
 source "${HOME}/.common.sh"
 
-sourceFunction indent
-sourceFunction printStatus
-sourceFunction printTopic
+sourceFunction indent printStatus printTopic
 
 # ==============================================================================
 function sourceFolder {
 # ------------------------------------------------------------------------------
-    # @TODO: Make `sExtension` an optional second parameter
-    sExtension='.sh'
-    printTopic "Sourcing all '${sExtension}' files from folder '$1'"
+    local sPath="$(readlink $1)"
 
-    iLength=${#1}
+    sExtension=".${2:-sh}"
+    printTopic "Sourcing all '${sExtension}' files from folder '$sPath'"
 
-    aFiles=$(find "$1" -type f -name "*${sExtension}" | sort -d)
+    iLength=${#sPath}
+
+    aFiles="$(find $sPath -type f -name *${sExtension} | sort -d)"
 
     for sFile in $aFiles;do
         printStatus "${sFile:$iLength}" | indent
