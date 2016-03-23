@@ -5,7 +5,7 @@
 # ------------------------------------------------------------------------------
 function parse_git_branch {
     local sColor
-    local sRef=$(git symbolic-ref HEAD 2> /dev/null) || return
+    local sRef="$($(which git) symbolic-ref HEAD 2> /dev/null)" || return
     local sBranch="${sRef#refs/heads/}"
 
     case "${sBranch}" in
@@ -36,7 +36,7 @@ function parse_git_branch {
     esac
 
     if [ "${sBranch}" != "" ];then
-        echo -ne " (\033[${sColor}m${sBranch}\033[00m)"
+        echo -ne "(\033[${sColor}m${sBranch}\033[00m)"
     fi
 
 }
