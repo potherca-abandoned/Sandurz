@@ -4,12 +4,11 @@
 # ------------------------------------------------------------------------------
 
 source "${HOME}/.common.sh"
-sourceFunction isInstalled
+sourceFunction isInstalled printWarning
 
 if isInstalled 'thefuck';then
     eval "$(thefuck --alias)"
 else
-    sourceFunction printWarning
     printWarning 'The correction script "thefuck" is not installed'
 fi
 # ==============================================================================
