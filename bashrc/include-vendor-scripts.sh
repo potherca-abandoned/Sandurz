@@ -41,9 +41,7 @@ function includeVendorScripts() {
     # ------------------------------------------------------------------------------
     sVendorDir="$(dirname ${sScriptPath})/../vendor"
 
-    sourceFunction indent
-    sourceFunction printTopic
-    sourceFunction printStatus
+    sourceFunction indent printTopic printStatus
 
     printTopic "Including vendor scripts" | indent
     for sFile in "${aVendorScript[@]}"
