@@ -32,12 +32,8 @@ function symlinkCommonFunctionsFile() {
 function importUtilities() {
   source "${sScriptDirectory}/functions/common.sh"
 
-  sourceFunction indent
-  sourceFunction printTopic
-  sourceFunction printStatus
-  sourceFunction printWarning
+  sourceFunction indent printTopic printStatus printWarning isMacOS
   #sourceFunction printDebug
-  sourceFunction isMacOS
 }
 # ==============================================================================
 
@@ -166,7 +162,7 @@ function runInstall() {
             #           those scripts can _only_ be used by others who also have coreutils installed.
             #           that might not be a desirable situation...
             printWarning "Older version of Bash is installed: ${BASH_VERSION%%(*}"
-        #elif @TODO: What else? What if we *are* on an older Linux system?
+        #"elif @TODO: What else? What if we *are* on an older Linux system?
         fi
     fi
     # @TODO: Check bash version and (especially when on OSX) install (newer) GNU version?
