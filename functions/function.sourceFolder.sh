@@ -14,7 +14,7 @@ function sourceFolder {
 
     iLength=${#sPath}
 
-    aFiles="$(find $sPath -type f -name *${sExtension} | sort -d)"
+    aFiles="$(find $sPath -type f -name \*${sExtension} | sort -d)"
 
     for sFile in $aFiles;do
         printStatus "${sFile:$iLength}" | indent
