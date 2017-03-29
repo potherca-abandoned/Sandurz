@@ -1,10 +1,22 @@
 #!/usr/bin/env bash
 
 decorateTags () {
-    local output
-    output=$(git for-each-ref --format ' %(contents:signature) %(color:green bold)%(align:right,15)%(tag)%(end)%(color:reset) %(color:yellow dim)%(taggerdate:short)%(color:reset) %(color:yellow)%(align:left,30)%(taggername)%(end)%(color:reset) %(subject)' --sort=taggerdate refs/tags \
-        | awk -v substitute='🔒' '/-----BEGIN PGP SIGNATURE-----/,/-----END PGP SIGNATURE-----/ { if ( $0 ~ /-----END PGP SIGNATURE-----/ ) print substitute; next } 1' \
-        | sed ':a;N;$!ba;s/🔒\n/🔒/g' \
+    local awkPattern end format output sedPattern start symbol
+
+    symbol='🔒'
+
+    start='/-----BEGIN PGP SIGNATURE-----/'
+    end='/-----END PGP SIGNATURE-----/'
+
+    sedPattern=':a;N;$!ba;s/'"${symbol}"'\n/'"${symbol}"'/g'
+    awkPattern="${start}"','"${end}"' { if ( $0 ~ '"${end}"' ) print substitute; next } 1'
+
+    format=' %(contents:signature) %(color:green bold)%(align:right,16)%(tag)%(end)%(color:reset) %(color:yellow dim)%(taggerdate:short)%(color:reset) %(color:yellow)%(align:left,30)%(taggername)%(end)%(color:reset) %(subject)'
+
+    output=$(\
+        git for-each-ref --format "${format}" --sort=taggerdate refs/tags \
+        | awk -v substitute="${symbol}" "${awkPattern}" \
+        | sed "${sedPattern}" \
     )
 
     if [[ -z "${output}" ]];then
