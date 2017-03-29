@@ -18,10 +18,9 @@
     log = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 
     ## http://blog.blindgaenger.net/advanced_git_aliases.html
-    this     = !git init && git add . && git commit -m \"initial commit\"
     amend    = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
     cleanout = !git ls-files -z --deleted | xargs -0 git rm
-    alias    = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
+    alias    = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t= \\2/' | sort
     ignore   = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
 
 
@@ -32,14 +31,15 @@
     ## Home Grown
     ## @FIXME: All of these examples should be checked to see if they need the current branch or master or develop (if in git flow repo)
 
+    create                  = !git init && git commit --allow-empty -m \"Initial Commit\" && git tag -s -a -m 'Release v0.0.0 -- Initial Release.' v0.0.0
     branches                = branch --list
-    #clone-all-branches      = !f(){for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v master`; do git branch --track ${branch##*/} $branch; done;};f && git fetch --all && git pull --all
+    #clone-all-branches     = !f(){for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v master`; do git branch --track ${branch##*/} $branch; done;};f && git fetch --all && git pull --all
     #delete-remote-branch   = push origin --delete branch
     incoming                = !~/.git.d/git-incoming-changes.sh
     info                    = !~/.git.d/git-info.sh
     settings                = config --list
     staged                  = diff --cached
-    tags                    = tag -n1 -l
+    tags                    = !~/.git.d/git-tags.sh
     unstash                 = stash pop
     unpushed                = log --branches --not --remotes --decorate
     undo-last-commit        = reset --soft HEAD^
