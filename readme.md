@@ -1,4 +1,4 @@
-| <kbd> ⚠️ This project in no longer mainted. </kbd> |
+| <kbd> ⚠️ This project in no longer maintained. </kbd> |
 |---|
 | It is currently being split into separate repositories: <li> [Dotfiles](https://github.com/Potherca/dotfiles) <li> [Bash Commands](https://github.com/potherca-bash) |
 
